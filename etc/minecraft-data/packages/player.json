@@ -1,0 +1,10 @@
+{
+  "packageNames": {
+    "login": "login",
+    "position": "position",
+    "chunk": "map_chunk",
+    "playerInfo": "player_info",
+    "spawnLivingEntity": "named_entity_spawn",
+    "destroyEntities": "entity_destroy"
+  }
+}

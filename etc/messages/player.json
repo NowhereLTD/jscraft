@@ -1,0 +1,5 @@
+{
+  "player.message": "%p%: %message%",
+  "player.join": "%p% joined the game.",
+  "player.left": "%p% left the game."
+}

@@ -1,0 +1,27 @@
+{
+  "name": "minecraftnodeserver",
+  "version": "1.0.0",
+  "description": "A nodeJS minecraft server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dr.McHack & Prooxey",
+  "license": "",
+  "dependencies": {
+    "minecraft-protocol": "^1.9.4",
+    "prismarine-chunk": "^1.11.0",
+    "simplex-noise": "^2.4.0",
+    "sqlite3": "^4.1.0",
+    "vec3": "^0.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "devDependencies": {}
+}
