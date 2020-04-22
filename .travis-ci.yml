@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - latest
+
+before-script:
+  - npm install
+
+script:
+  - npm build
