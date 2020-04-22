@@ -33,33 +33,33 @@ class PlayerManager extends EntityManager {
     /**
      * removePlayerById - Remove a specific player by id
      *
-     * @param {String} id Description
+     * @param {number} id the player entity id
      *
      * @return {type} Description
      */
-    removeEntityById(id) {
-      this.removeObject(id);
+    removePlayerById(id) {
+      this.removeEntity(id);
     }
 
 
     /**
-     * getEntity - get a entity by id
+     * getPlayer - get a player by id
      *
      * @param {number} id The entity id
      *
-     * @return {The object from map} Description
+     * @return {Player} the player from map
      */
-    getEntity(id) {
-      this.getObject(id);
+    getPlayer(id) {
+      this.getEntity(id);
     }
 
 
     /**
-     * getAllEntitys - Get a list with all entitys
+     * getAllPlayer - Get a list with all players
      *
-     * @return {array} A list with all entitys
+     * @return {array} A list with all players
      */
-    getAllEntitys() {
-      return this.getAllObjects();
+    getAllPlayer() {
+      return this.getAllEntitys();
     }
 }
