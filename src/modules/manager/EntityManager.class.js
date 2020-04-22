@@ -51,7 +51,7 @@ class EntityManager extends Manager {
    *
    * @param {number} id The entity id
    *
-   * @return {The object from map} Description
+   * @return {Entity} return the entity
    */
   getEntity(id) {
     this.getObject(id);
