@@ -69,3 +69,5 @@ class EntityManager extends Manager {
 
 
 }
+
+module.exports = EntityManager;

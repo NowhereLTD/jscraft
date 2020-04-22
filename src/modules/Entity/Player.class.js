@@ -8,6 +8,14 @@ const PlayerPackageHandler = require("../../Packages/PackageHandler/Player/Playe
  * @extends LivingEntity
  */
 class Player extends LivingEntity {
+  /**
+   * constructor - Description
+   *
+   * @param {Client} client A ckient instance
+   * @param {Server} server A server instance
+   *
+   * @return {type} Description
+   */
   constructor(client, server) {
     super(client.id, client.uuid, MobType.PLAYER);
     this.client = client;

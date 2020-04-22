@@ -77,3 +77,5 @@ class PlayerManager extends EntityManager {
     player.login();
   }
 }
+
+module.exports = PlayerManager;
