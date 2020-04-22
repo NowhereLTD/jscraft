@@ -8,13 +8,13 @@ const PlayerPackageHandler = require("../../Packages/PackageHandler/Player/Playe
  * @extends LivingEntity
  */
 class Player extends LivingEntity {
-  constructor(client, id, uuid) {
-    super(id, uuid, MobType.PLAYER);
+  constructor(client) {
+    super(client.id, client.uuid, MobType.PLAYER);
     this.client = client;
     this.packageHandler = new PlayerPackageHandler(this);
   }
 
-  
+
 }
 
 module.exports = Player;
