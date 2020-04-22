@@ -4,6 +4,23 @@ on:
     branches:
       - master
 jobs:
+  build:
+    runs-on: ubuntu-latest
+      - uses: actions/checkout@v1
+
+      - name: Setup SSH Key and known_hosts
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github >> ~/.ssh/known_hosts
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+
+      - name: Some task that fetches dependencies
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: ./fetch-deps.sh
   deploy:
     runs-on: ubuntu-latest
     steps:
@@ -15,3 +32,9 @@ jobs:
         with:
           source_dir: ./src
           output_dir: ./docs
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./docs
