@@ -6,8 +6,8 @@ const Manager = require("Manager.class.js");
  * @extends Manager
  */
 class EntityManager extends Manager {
-  constructor() {
-
+  constructor(server) {
+    super(server);
   }
 
   /**

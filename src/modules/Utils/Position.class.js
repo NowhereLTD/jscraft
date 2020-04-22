@@ -12,12 +12,21 @@ class Position {
    *
    * @return {type} Description
    */
-  constructor(x = 0, y = 0, z = 0, pitch = 0, yaw = 0) {
+  constructor(x = 0, y = 0, z = 0, pitch = 0, yaw = 0, world = "world") {
     this.x = x;
     this.y = y;
     this.z = z;
     this.pitch = pitch;
     this.yaw = yaw;
+    this.world = world;
+  }
+
+
+  getChunk() {
+    return {
+      x: this.x * 32,
+      z: this.z * 32
+    }
   }
 }
 
