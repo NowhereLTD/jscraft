@@ -4,7 +4,7 @@
   "description": "A nodeJS minecraft server",
   "main": "server.js",
   "scripts": {
-    "debug": "node server.js --debug"
+    "debug": "node server.js --debug",
     "start": "node server.js"
   },
   "author": "NowhereLTD",
