@@ -21,17 +21,16 @@ class PlayerPackageHandler {
   /**
    * login - send player login package
    *
-   * @param {Player}  player        The Player Entity
    * @param {World}   world         The default world to spawn
    * @param {number}  maxPlayers    Max Players on server or world
    * @param {boolean} [debug=false] Reduce the debug information
    *
    * @return {type} Description
    */
-  login(player, world, maxPlayers, debug = false) {
+  login(world, maxPlayers, debug = false) {
     this.sendPackage("login", {
-      entityId: player.id,
-      gameMode: player.gameMode,
+      entityId: this.player.id,
+      gameMode: this.player.gameMode,
       levelType: world.levelType,
       dimension: world.dimension,
       difficulty: world.difficulty,
