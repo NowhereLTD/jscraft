@@ -4,8 +4,9 @@
  */
 class Manager {
 
-  constructor() {
+  constructor(server) {
     this.map = [];
+    this.server = server;
   }
 
   /**
