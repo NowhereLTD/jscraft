@@ -1,0 +1,4 @@
+name: Generate JSDoc documentation
+  uses: brunokrauss/jsdoc-action@3
+  with:
+    jsdoc-path: src
