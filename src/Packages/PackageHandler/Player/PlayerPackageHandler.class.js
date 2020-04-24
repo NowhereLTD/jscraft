@@ -71,17 +71,16 @@ class PlayerPackageHandler {
    *
    * @return {type} Description
    */
-  sendChunk(position, chunk, blockEntities = [], bitMap = 0xffff, groundUp = true) {
+  sendChunk(position, chunk, bitMap = 0xffff, blockEntities = [], groundUp = true) {
     this.sendPackage("map_chunk", {
-      x: location.x,
-      z: location.z,
+      x: position.x,
+      z: position.z,
       groundUp: groundUp,
       bitMap: bitMap,
       chunkData: chunk,
       blockEntities: blockEntities
     });
   }
-
 
   /**
    * sendPlayerInfo - send player information data
