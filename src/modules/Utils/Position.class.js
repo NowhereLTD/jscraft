@@ -21,11 +21,15 @@ class Position {
     this.world = world;
   }
 
-
+  /**
+   * getChunk - Get the chunk from location
+   *
+   * @return {JSON} x and z coordinate in json ({x: <value>, z: <value>})
+   */
   getChunk() {
     return {
-      x: this.x * 32,
-      z: this.z * 32
+      x: Math.floor(this.x / 16),
+      z: Math.floor(this.z / 16)
     }
   }
 }
