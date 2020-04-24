@@ -1,5 +1,5 @@
 const WorldGenerator = require("./WorldGenerator.class.js");
-const Chunk = require("prismarine-chunk")("1.8");
+const Chunk = require("prismarine-chunk")("1.15.2");
 const Vec3 = require("vec3");
 const Biome = require("./Biome.class.js");
 
