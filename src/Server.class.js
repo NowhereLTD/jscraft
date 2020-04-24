@@ -27,7 +27,7 @@ class Server {
     this.spawnPosition = new Position();
     this.worldManager = new WorldManager(this);
     this.worldManager.defaultWorld();
-    this.worldManager.getWorld("world").createSpawnChunks();
+    //this.worldManager.getWorld("world").createSpawnChunks();
   }
 
 

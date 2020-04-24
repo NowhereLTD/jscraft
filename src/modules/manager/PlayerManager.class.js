@@ -69,12 +69,25 @@ class PlayerManager extends EntityManager {
    *
    * @param {MCClient} client A minecraft client
    *
-   * @return {type} Description
+   * @return {Player} return the created player
    */
   createPlayer(client) {
     let player = new Player(client, this.server);
     this.addPlayer(player);
     player.login();
+    return player;
+  }
+
+
+  /**
+   * deletePlayer - Delete a player
+   *
+   * @param {Player} player the player
+   *
+   * @return {type} Description
+   */
+  deletePlayer(player) {
+    this.removePlayer(player);
   }
 }
 
