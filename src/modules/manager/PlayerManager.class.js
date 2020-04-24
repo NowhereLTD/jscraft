@@ -1,7 +1,18 @@
 const EntityManager = require("./EntityManager.class.js");
 const Player = require("../Entity/Player.class.js");
+const Position = require("../Utils/Position.class.js");
 
+/**
+ * PlayerManager - Manage player
+ * @extends EntityManager
+ */
 class PlayerManager extends EntityManager {
+  /**
+   * constructor - Init the player manager
+   *
+   * @param {Server} server the base server
+   *
+   */
   constructor(server) {
     super(server);
   }
@@ -61,6 +72,41 @@ class PlayerManager extends EntityManager {
    */
   getAllPlayers() {
     return this.getAllEntitys();
+  }
+
+
+  /**
+   * getPlayersInRadius - get a list with all players in a specific radius from position
+   *
+   * @param {Position} position the middlepoint
+   * @param {number}   distance the maximal distance between middlepoint and player
+   *
+   * @return {array} A list with all players in radius
+   */
+  getPlayersInRadius(position, distance) {
+    let players = [];
+    this.getAllPlayers().forEach((player, i) => {
+      if(this.distanceBetweenPosition(player.position, position) < distance) {
+        players.push(player);
+      }
+    });
+    return players;
+  }
+
+
+  /**
+   * distanceBetweenPosition - Get the distance between two positions
+   *
+   * @param {Position} position1 The first position
+   * @param {Position} position2 The second position
+   *
+   * @return {number} Distance between positions
+   */
+  distanceBetweenPosition(position1, position2) {
+    let deltaX = position1.x - position2.x;
+    let deltaY = position1.y - position2.y;
+    let deltaZ = position1.z - position2.z;
+    return Math.sqrt(deltaX ^ 2 + deltaY ^ 2 + deltaZ ^ 2);
   }
 
 

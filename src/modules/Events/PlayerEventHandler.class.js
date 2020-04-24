@@ -1,5 +1,14 @@
 
+/**
+ * PlayerEventHandler - The PlayerEventHandler
+ */
 class PlayerEventHandler {
+  /**
+   * constructor - Init the PlayerEventHandler
+   *
+   * @param {Server} server The base server
+   *
+   */
   constructor(server) {
     this.server = server;
     this.server.mc.on("login", (client) => {
@@ -17,6 +26,13 @@ class PlayerEventHandler {
     });
   }
 
+
+  /**
+   * registerPlayerEvents - Register all player events
+   *
+   * @param {Player} player The player to register events
+   *
+   */
   registerPlayerEvents(player) {
     player.events.on("", function(data){
       player.position.x = data.x;
@@ -38,6 +54,17 @@ class PlayerEventHandler {
     });
   }
 
+
+  /**
+   * receiveMovement - Handle the player Movement
+   *
+   * @param {Player}  player  The player witch is move
+   * @param {JSON}    data    A data object
+   * @param {boolean} hasPos  Has the player change his position
+   * @param {boolean} hasLook has the player look
+   *
+   * @return {type} Description
+   */
   receiveMovement(player, data, hasPos, hasLook) {
     let packetName = undefined;
     let packetData = {};
@@ -107,18 +134,30 @@ class PlayerEventHandler {
           entityId: player.id,
           headYaw: this.convAngle(data.yaw)
         };
-        /*player.nearbyPlayer.forEach((p) => {
-          p.connection.sendPacket(packetName, packetData);
-          p.connection.sendPacket("entity_head_rotation", rotData);
-        });*/
+        this.server.playerManager.getPlayersInRadius(player.position, 16).forEach((p, i) => {
+          if(p !== player) {
+            console.log("send");
+            p.client.sendPacket(packetName, packetData);
+            p.client.sendPacket("entity_head_rotation", rotData);
+          }
+        });
       } else {
-        /*player.nearbyPlayer.forEach((p) => {
-          p.connection.sendPacket(packetName, packetData);
-        });*/
+        this.server.playerManager.getPlayersInRadius(player.position, 16).forEach((p, i) => {
+          if(p !== player) {
+            p.client.sendPacket(packetName, packetData);
+          }
+        });
       }
     }
   }
 
+  /**
+   * convAngle - Mathj function to convert yaw and pitch coordinates
+   *
+   * @param {number} f The number to calculate
+   *
+   * @return {number} The calculated number
+   */
   convAngle(f) {
     let b = Math.floor((f % 360) * 256 / 360);
     if(b < -128) b += 256;
