@@ -1,6 +1,6 @@
 const World = require("./World.class.js");
 const Vec3 = require("vec3");
-const SQLite=require("sqlite3");
+const SQLite = require("sqlite3");
 
 class WorldManager {
 
@@ -18,7 +18,7 @@ class WorldManager {
     console.log("Start create the world '" + worldName + "' ...");
     // Create Table in Database
     //console.log("CREATE TABLE " + worldName + " IF NOT EXISTS;");
-    this.db.exec("CREATE TABLE IF NOT EXISTS world_" + worldName +  "_chunks (name VARCHAR(32), chunkX INT, chunkZ INT, chunkDump TEXT);");
+    this.db.exec("CREATE TABLE IF NOT EXISTS world_" + worldName + "_chunks (name VARCHAR(32), chunkX INT, chunkZ INT, chunkDump TEXT);");
 
     let world = new World(this.server, worldName, this.db);
 
