@@ -1,5 +1,5 @@
 
-module.exports = {
+module.exports = Object.freeze({
   AREAEFFECTCLOUD: 0,
   ARMORSTAND: 1,
   ARROW: 2,
@@ -95,4 +95,4 @@ module.exports = {
   PLAYER: 92,
   FISHING_BOBBER: 93,
   TRIDENT: 94
-}
+});
