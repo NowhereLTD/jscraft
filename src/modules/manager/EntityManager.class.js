@@ -1,4 +1,4 @@
-const Manager = require("Manager.class.js");
+const Manager = require("./Manager.class.js");
 
 
 /**

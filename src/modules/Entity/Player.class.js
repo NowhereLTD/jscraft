@@ -1,7 +1,9 @@
 const MobType = require("../../Enums/MobType.enum.js");
-const LivingEntity = require("LivingEntity.class.js");
+const GameMode = require("../../Enums/GameMode.enum.js");
+const LivingEntity = require("./LivingEntity.class.js");
 const PlayerPackageHandler = require("../../Packages/PackageHandler/Player/PlayerPackageHandler.class.js");
-
+const Position = require("../Utils/Position.class.js");
+const EventHandler = require("events");
 
 /**
  * Player - A Player object
@@ -23,6 +25,8 @@ class Player extends LivingEntity {
     this.packageHandler = new PlayerPackageHandler(this);
     this.position = new Position();
     this.world = null;
+    this.gameMode = GameMode.CREATIVE;
+    this.events = new EventHandler.EventEmitter();
   }
 
 
@@ -35,9 +39,10 @@ class Player extends LivingEntity {
     this.position = this.server.spawnPosition;
     this.world = this.server.worldManager.getWorld(this.position.world);
     this.packageHandler.login(this.world, this.server.properties.maxPlayers);
-    this.packageHandler.setPosition(this.position);
     let chunkLocation = this.position.getChunk();
-    this.packetHandler.sendChunk(chunkLocation, this.world.chunkList[chunkLocation.x][chunkLocation.z].dump())
+    let chunkData = this.world.chunkList[chunkLocation.x][chunkLocation.z].dump();
+    this.packageHandler.sendChunk(chunkLocation, chunkData);
+    this.packageHandler.setPosition(this.position);
   }
 
 }

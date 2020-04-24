@@ -1,4 +1,4 @@
-const Entity = require("Entity.class.js");
+const Entity = require("./Entity.class.js");
 
 class LivingEntity extends Entity {
   constructor(id, uuid, type) {
