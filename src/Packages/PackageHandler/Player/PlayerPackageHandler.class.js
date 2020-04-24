@@ -63,23 +63,24 @@ class PlayerPackageHandler {
   /**
    * sendChunk - Send a chunk
    *
-   * @param {Chunk} chunk              Chunk data
-   * @param {Array} [blockEntities=[]] All Block Entitys
-   * @param {Hex}   [bitMap=0xffff]    The default bitMap
+   * @param {JSON}    position           Chunk X and Z coordinate
+   * @param {Chunk}   chunk              Chunk data
+   * @param {Array}   [blockEntities=[]] All Block Entitys
+   * @param {Hex}     [bitMap=0xffff]    The default bitMap
+   * @param {boolean} [groundUp=true]    The default groundUp
    *
    * @return {type} Description
    */
-  sendChunk(chunk, blockEntities = [], bitMap = 0xffff) {
+  sendChunk(position, chunk, bitMap = 0xffff, blockEntities = [], groundUp = true) {
     this.sendPackage("map_chunk", {
-      x: chunk.x,
-      z: chunk.y,
-      groundUp: chunk.groundUp,
+      x: position.x,
+      z: position.z,
+      groundUp: groundUp,
       bitMap: bitMap,
-      chunkData: chunk.data,
+      chunkData: chunk,
       blockEntities: blockEntities
     });
   }
-
 
   /**
    * sendPlayerInfo - send player information data

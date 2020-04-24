@@ -3,9 +3,15 @@
  * Manager - A base manager class
  */
 class Manager {
-
-  constructor() {
+  /**
+   * constructor - Init server manager
+   *
+   * @param {Server} server The base server
+   *
+   */
+  constructor(server) {
     this.map = [];
+    this.server = server;
   }
 
   /**

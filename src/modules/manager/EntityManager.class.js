@@ -1,4 +1,4 @@
-const Manager = require("Manager.class.js");
+const Manager = require("./Manager.class.js");
 
 
 /**
@@ -6,8 +6,8 @@ const Manager = require("Manager.class.js");
  * @extends Manager
  */
 class EntityManager extends Manager {
-  constructor() {
-
+  constructor(server) {
+    super(server);
   }
 
   /**
@@ -69,3 +69,5 @@ class EntityManager extends Manager {
 
 
 }
+
+module.exports = EntityManager;
