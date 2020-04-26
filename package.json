@@ -10,11 +10,15 @@
   "author": "NowhereLTD",
   "license": "",
   "dependencies": {
-    "minecraft-protocol": "latest",
-    "prismarine-chunk": "latest",
-    "simplex-noise": "latest",
-    "sqlite3": "latest",
-    "vec3": "latest"
+    "better-sqlite3": "^6.0.1",
+    "minecraft-protocol": "^1.11.0",
+    "mysql": "^2.18.1",
+    "pg": "^8.0.3",
+    "prismarine-chunk": "^1.14.0",
+    "simplex-noise": "^2.4.0",
+    "sqlite3": "^4.1.1",
+    "tarantool-driver": "^3.0.6",
+    "vec3": "^0.1.3"
   },
   "repository": {
     "type": "git",

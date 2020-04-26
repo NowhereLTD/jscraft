@@ -1,16 +1,91 @@
+const { PostgreSQL } = require("pg")
+const MySQL = require('mysql');
+var TarantoolConnection = require("tarantool-driver");
+const SQLite = require("better-sqlite3");
 
 class SQLHandler {
 
-  constructor() {
-
+  constructor(driver, dbName, host = null, user = null, password = null, port = null) {
+    this.driver = driver;
+    this.dbName = dbName;
+    this.host = host;
+    this.port = port;
+    this.user = user;
+    this.password = password;
+    this.database = null;
   }
 
   connect() {
-    //TODO connect to database
+    switch (this.driver) {
+      case "postgres":
+        if(this.port == null) {
+          this.port = 5432;
+        }
+        this.database = new PostgreSQL({
+          host     : this.host,
+          port     : this.port,
+          database : this.dbName,
+          user     : this.user,
+          password : this.password,
+        });
+        this.database.connect();
+        break;
+      case "mysql":
+        if(this.port == null) {
+          this.port = 3306;
+        }
+        this.database = MySQL.createConnection({
+          host     : this.host,
+          port     : this.port,
+          database : this.dbName,
+          user     : this.user,
+          password : this.password
+        });
+        this.database.connect();
+        break;
+      case "tarantool":
+        this.database = new TarantoolConnection(this.host + ":" + this.password + "@" + this.user + ":" + this.port);
+        break;
+      case "sqlite":
+        this.dbName = this.dbName + ".db";
+        this.database = new SQLite.Database(this.dbName);
+        break;
+    }
   }
 
   disconnect() {
-    //TODO disconnect from database
+    switch (this.driver) {
+      case "postgres":
+        this.database.end();
+        break;
+      case "mysql":
+        this.database.end();
+        break;
+      case "tarantool":
+        this.database.disconnect();
+        break;
+      case "sqlite":
+        this.database.close();
+        break;
+    }
+  }
+
+  exec(sqlString) {
+    switch (this.driver) {
+      case "postgres":
+        return this.database.query(sqlString);
+        break;
+      case "mysql":
+        return this.database.query(sqlString);
+        break;
+      case "tarantool":
+        return this.database.sql(sqlString);
+        break;
+      case "sqlite":
+        return this.database.exec(sqlString);
+        break;
+    }
+    return null;
   }
 
   update(table, columns, values, condition, value) {
@@ -50,7 +125,7 @@ class SQLHandler {
         sqlcode += `${conditions[i]}='${values[i]}' AND `
       }
       sqlcode = sqlcode.substr(0, sqlcode.length - 5)
-    
+
     //TODO use sqlcode
   }
 
