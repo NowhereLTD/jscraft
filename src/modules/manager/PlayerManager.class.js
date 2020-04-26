@@ -1,5 +1,6 @@
 const EntityManager = require("./EntityManager.class.js");
 const Player = require("../Entity/Player.class.js");
+const Controller = require("../Entity/Controller.class.js");
 const Position = require("../Utils/Position.class.js");
 
 /**
