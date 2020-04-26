@@ -11,7 +11,7 @@
   "license": "",
   "dependencies": {
     "better-sqlite3": "^6.0.1",
-    "minecraft-protocol": "^1.11.0",
+    "minecraft-protocol": "latest",
     "mysql": "^2.18.1",
     "pg": "^8.0.3",
     "prismarine-chunk": "^1.14.0",
