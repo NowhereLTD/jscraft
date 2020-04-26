@@ -1,5 +1,6 @@
 const EntityManager = require("./EntityManager.class.js");
 const Player = require("../Entity/Player.class.js");
+const Controller = require("../Entity/Controller.class.js");
 const Position = require("../Utils/Position.class.js");
 
 /**
@@ -118,7 +119,7 @@ class PlayerManager extends EntityManager {
    * @return {Player} return the created player
    */
   createPlayer(client) {
-    let player = new Player(client, this.server);
+    let player = new Controller(client, this.server, new Player(client, this.server));
     this.addPlayer(player);
     player.login();
     return player;

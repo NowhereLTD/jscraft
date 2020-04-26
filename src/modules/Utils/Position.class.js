@@ -12,13 +12,14 @@ class Position {
    *
    * @return {type} Description
    */
-  constructor(x = 0, y = 0, z = 0, pitch = 0, yaw = 0, world = "world") {
+  constructor(x = 0, y = 0, z = 0, pitch = 0, yaw = 0, world = "world", onGround = false) {
     this.x = x;
     this.y = y;
     this.z = z;
     this.pitch = pitch;
     this.yaw = yaw;
     this.world = world;
+    this.onGround = onGround;
   }
 
   /**

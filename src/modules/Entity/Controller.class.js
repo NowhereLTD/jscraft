@@ -5,24 +5,15 @@ const PlayerPackageHandler = require("../../Packages/PackageHandler/Player/Playe
 const Position = require("../Utils/Position.class.js");
 const EventHandler = require("events");
 
-/**
- * Player - A Player object
- * @extends LivingEntity
- */
-class Player extends LivingEntity {
-  /**
-   * constructor - Description
-   *
-   * @param {Client} client A ckient instance
-   * @param {Server} server A server instance
-   *
-   * @return {type} Description
-   */
-  constructor(client, server) {
-    super(client.id, client.uuid, MobType.PLAYER);
+
+class Controller {
+
+  constructor(client, server, entity) {
     this.client = client;
     this.server = server;
+    this.entity = entity;
     this.packageHandler = new PlayerPackageHandler(this);
+    this.gameMode = GameMode.CREATIVE;
     this.events = new EventHandler.EventEmitter();
   }
 
@@ -36,7 +27,7 @@ class Player extends LivingEntity {
     this.position = this.server.spawnPosition;
     this.world = this.server.worldManager.getWorld(this.position.world);
     this.packageHandler.login(this.world, this.server.properties.maxPlayers);
-    let chunkLocation = this.position.getChunk();
+    let chunkLocation = this.entity.position.getChunk();
     let chunkData = this.world.chunkList[chunkLocation.x][chunkLocation.z].dump();
     this.packageHandler.sendChunk(chunkLocation, chunkData);
     this.packageHandler.setPosition(this.position);
@@ -44,4 +35,4 @@ class Player extends LivingEntity {
 
 }
 
-module.exports = Player;
+module.exports = Controller;
