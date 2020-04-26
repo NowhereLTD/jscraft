@@ -118,7 +118,7 @@ class PlayerManager extends EntityManager {
    * @return {Player} return the created player
    */
   createPlayer(client) {
-    let player = new Player(client, this.server);
+    let player = new Controller(client, this.server, new Player(client, this.server));
     this.addPlayer(player);
     player.login();
     return player;
