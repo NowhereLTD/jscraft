@@ -13,7 +13,7 @@ class Entity {
    * @param {number} uuid The uuid from Entity
    * @param {number} type The Entity type
    *
-   */  
+   */
   constructor(id, uuid, type) {
     this.id = id;
     this.uuid = uuid;

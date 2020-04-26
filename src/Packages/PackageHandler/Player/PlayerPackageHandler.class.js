@@ -153,6 +153,83 @@ class PlayerPackageHandler {
 
 
   /**
+   * ---------------------------------------------------------------------------
+   * Send player move packages
+   * ---------------------------------------------------------------------------
+   */
+
+  /**
+   * sendRelativeEntityMove - send a relative entity move package
+   *
+   * @param {LivingEntity} entity the entity instance
+   *
+   * @return {type} Description
+   */
+  sendRelativeEntityMove(entity) {
+    return this.sendPackage("rel_entity_move", {
+      entityId: entity.id,
+      dX: entity.packagePosition.x,
+      dY: entity.packagePosition.y,
+      dZ: entity.packagePosition.z,
+      onGround: entity.onGround
+    });
+  }
+
+
+  /**
+   * sendEntityLook - send entity look package
+   *
+   * @param {LivingEntity} entity the entity instance
+   *
+   * @return {type} Description
+   */
+  sendEntityLook(entity) {
+    return this.sendPackage("entity_look", {
+      entityId: entity.id,
+      yaw: entity.packagePosition.yaw,
+      pitch: entity.packagePosition.pitch,
+      onGround: entity.onGround
+    });
+  }
+
+
+  /**
+   * sendEntityMoveLook - send a entity look and move package
+   *
+   * @param {LivingEntity} entity the entity instance
+   *
+   * @return {type} Description
+   */
+  sendEntityMoveLook(entity) {
+    return this.sendPackage("entity_move_look", {
+      entityId: entity.id,
+      dX: entity.packagePosition.x,
+      dY: entity.packagePosition.y,
+      dZ: entity.packagePosition.z,
+      yaw: entity.packagePosition.yaw,
+      pitch: entity.packagePosition.pitch,
+      onGround: entity.onGround
+    });
+  }
+
+
+  /**
+   * sendEntityHeadLocation - set the entity head location
+   *
+   * @param {LivingEntity} entity th entity instance
+   *
+   * @return {type} Description
+   */
+  sendEntityHeadLocation(entity) {
+    return this.sendPackage("entity_head_rotation", {
+      entityId: entity.id,
+      headYaw: entity.packagePosition.yaw
+    });
+  }
+
+
+
+  /**
    * sendPackage - send a package to client
    *
    * @param {String} name Name of package

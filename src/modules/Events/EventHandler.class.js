@@ -28,7 +28,7 @@ class EventHandler {
         return false;
       }
       files.forEach((file, i) => {
-        if(file == "EventHandler.class.js") {
+        if(file == "EventHandler.class.js" || file == "Player") {
           return false;
         }
         let Handler = require("./" + file);

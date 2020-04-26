@@ -24,7 +24,6 @@ class Player extends LivingEntity {
     this.server = server;
     this.packageHandler = new PlayerPackageHandler(this);
     this.position = new Position();
-    this.onGround = false;
     this.world = null;
     this.gameMode = GameMode.CREATIVE;
     this.events = new EventHandler.EventEmitter();
