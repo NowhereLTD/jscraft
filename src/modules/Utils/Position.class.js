@@ -33,6 +33,14 @@ class Position {
       z: Math.floor(this.z / 16)
     }
   }
+
+  distanceTo(position) {
+    let deltaX = position.x - this.x;
+    let deltaY = position.y - this.y;
+    let deltaZ = position.z - this.z;
+
+    return Math.sqrt(deltaX ^ 2 + deltaY ^ 2 + deltaZ ^ 2);
+  }
 }
 
 module.exports = Position;
