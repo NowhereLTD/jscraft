@@ -1,5 +1,5 @@
 const Entity = require("./Entity.class.js");
-const Position = require("../Utils/Position.class.js");
+const Position = require("../Utils/PlayerPosition.class.js");
 
 /**
  * LivingEntity - Representate a LivingEntity

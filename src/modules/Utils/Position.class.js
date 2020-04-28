@@ -12,14 +12,10 @@ class Position {
    *
    * @return {type} Description
    */
-  constructor(x = 0, y = 0, z = 0, pitch = 0, yaw = 0, world = "world", onGround = false) {
+  constructor(x = 0, y = 0, z = 0) {
     this.x = x;
     this.y = y;
     this.z = z;
-    this.pitch = pitch;
-    this.yaw = yaw;
-    this.world = world;
-    this.onGround = onGround;
   }
 
   /**
@@ -34,6 +30,14 @@ class Position {
     }
   }
 
+
+  /**
+   * distanceTo - calculate the distance between this and another position
+   *
+   * @param {Position} position the other position to calculate the distance
+   *
+   * @return {number} the distance
+   */
   distanceTo(position) {
     let deltaX = position.x - this.x;
     let deltaY = position.y - this.y;

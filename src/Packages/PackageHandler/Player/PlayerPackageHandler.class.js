@@ -1,4 +1,4 @@
-
+const MobType = require("../../../Enums/MobType.enum.js");
 
 /**
  * PlayerPackageHandler - Handle Player Connection Package
@@ -62,20 +62,20 @@ class PlayerPackageHandler {
    * @return {type} Description
    */
   openWindow(window) {
-    if(inventoryType == "EntityHorse") {
+    if(window.entity.type == MobType.HORSE) {
       return this.sendPackage("open_window", {
         windowId: window.id,
         inventoryType: window.type,
         windowTitle: window.name,
-        slotCount: window.slots.length,
+        slotCount: window.size,
         entityId: window.entity.id
       });
     }else {
       return this.sendPackage("open_window", {
         windowId: window.id,
         inventoryType: window.type,
-        windowTitle: window.name,
-        slotCount: window.slots.length
+        windowTitle: window.title,
+        slotCount: window.size
       });
     }
   }
@@ -118,7 +118,7 @@ class PlayerPackageHandler {
   setWindowSlot(window, slotId, item) {
     return this.sendPackage("set_slot", {
       windowId: window.id,
-      slot: slot.id,
+      slot: slotId,
       item: item
     });
   }

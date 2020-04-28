@@ -2,7 +2,7 @@ const MobType = require("../../Enums/MobType.enum.js");
 const GameMode = require("../../Enums/GameMode.enum.js");
 const LivingEntity = require("./LivingEntity.class.js");
 const PlayerPackageHandler = require("../../Packages/PackageHandler/Player/PlayerPackageHandler.class.js");
-const Position = require("../Utils/Position.class.js");
+const Position = require("../Utils/PlayerPosition.class.js");
 const EventHandler = require("events");
 
 

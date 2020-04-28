@@ -1,9 +1,9 @@
 const mc = require("minecraft-protocol");
 const EventHandler = require("./modules/Events/EventHandler.class.js");
-const PlayerManager = require("./modules/manager/PlayerManager.class.js");
-const Position = require("./modules/Utils/Position.class.js");
+const PlayerManager = require("./modules/Manager/PlayerManager.class.js");
+const Position = require("./modules/Utils/PlayerPosition.class.js");
 const WorldManager = require("./modules/World/WorldManager.class.js");
-
+const JSONLoader = require("./modules/Utils/JSONLoader.class.js");
 
 /**
  * Server - The server class
@@ -17,6 +17,8 @@ class Server {
    */
   constructor(properties) {
     this.properties = properties;
+    this.jsonLoader = new JSONLoader();
+    this.packageStructure = this.jsonLoader.load("./etc/minecraft-data/structure/structure.json");
   }
 
 
