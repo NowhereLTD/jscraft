@@ -1,4 +1,4 @@
-const Position = require("../Utils/Position.class.js");
+const Position = require("../Utils/PlayerPosition.class.js");
 
 
 /**

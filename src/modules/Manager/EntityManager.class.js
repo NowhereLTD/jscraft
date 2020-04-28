@@ -1,5 +1,5 @@
 const Manager = require("./Manager.class.js");
-
+const { UUID } = require("uuidv1");
 
 /**
  * EntityManager - Manage all Entitys
@@ -65,6 +65,36 @@ class EntityManager extends Manager {
    */
   getAllEntitys() {
     return this.getAllObjects();
+  }
+
+
+  /**
+   * createEntity - Create a new entity
+   *
+   * @param {MobType} type The entity type
+   * @param {number} [id=] the entity id
+   *
+   * @return {Entity} the created entity
+   */
+  createEntity(type, id = this.getAllEntitys().length, uuid = UUID()) {
+    let entity = new Entity(id, uuid, type);
+    this.addEntity(entity);
+    return entity;
+  }
+
+
+  /**
+   * createLivingEntity - Create a living entity
+   *
+   * @param {MobType} type The entity type
+   * @param {number} [id=] Description
+   *
+   * @return {LivingEntity} the created living entity
+   */
+  createLivingEntity(type, id = this.getAllEntitys().length, uuid = UUID()) {
+    let entity = new LivingEntity(id, uuid, type);
+    this.addEntity(entity);
+    return entity;
   }
 
 

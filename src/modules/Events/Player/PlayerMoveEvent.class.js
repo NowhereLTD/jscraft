@@ -25,14 +25,20 @@ class PlayerMoveEvent {
    * @return {type} Description
    */
   receivePacketPosition(data) {
+    //console.log(data);
+    //console.log(this.player.entity.position);
+
     this.player.entity.packagePosition.x = data.x * 32 - this.player.entity.position.x * 32;
     this.player.entity.packagePosition.y = data.y * 32 - this.player.entity.position.y * 32;
     this.player.entity.packagePosition.z = data.z * 32 - this.player.entity.position.z * 32;
+    if(this.player.entity.packagePosition.x > 1 || this.player.entity.packagePosition.z > 1) {
+      this.player.sendRadiusChunks();
+    }
 
     this.player.entity.position.x = data.x;
     this.player.entity.position.y = data.y;
     this.player.entity.position.z = data.z;
-    this.player.entity.onGround = data.onGround;
+    this.player.entity.position.onGround = data.onGround;
 
     this.player.events.emit("player_walk", this.player);
 
@@ -57,7 +63,7 @@ class PlayerMoveEvent {
 
     this.player.entity.position.yaw = data.yaw;
     this.player.entity.position.pitch = data.pitch;
-    this.player.entity.onGround = data.onGround;
+    this.player.entity.position.onGround = data.onGround;
 
     this.player.entity.events.emit("player_spin", this.player);
 
@@ -110,11 +116,15 @@ class PlayerMoveEvent {
    * @return {type} Description
    */
   receivePacketFlying(data) {
-    this.player.entity.position.x = data.x;
-    this.player.entity.position.y = data.y;
-    this.player.entity.position.z = data.z;
-    this.player.entity.position.yaw = data.yaw;
-    this.player.entity.position.pitch = data.pitch;
+    if(data.x && data.y && data.z) {
+      this.player.entity.position.x = data.x;
+      this.player.entity.position.y = data.y;
+      this.player.entity.position.z = data.z;
+    }
+    if(data.yaw && data.pitch) {
+      this.player.entity.position.yaw = data.yaw;
+      this.player.entity.position.pitch = data.pitch;
+    }
     this.player.entity.onGround = data.onGround;
     this.player.events.emit("player_flight", this.player);
   }

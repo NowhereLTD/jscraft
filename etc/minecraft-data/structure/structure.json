@@ -1,0 +1,29 @@
+
+{
+  "default": {
+    "player": {
+      "inventory": {
+        "slot": {
+          "null": {"blockId": -1},
+          "type": "blockId",
+          "count": "itemCount",
+          "nbt": "nbtData",
+          "meta": "itemDamage"
+        }
+      }
+    }
+  },
+  "1.13": {
+    "player": {
+      "inventory": {
+        "slot": {
+          "null": {"present": false},
+          "type": "itemId",
+          "count": "itemCount",
+          "nbt": "nbtData"
+        }
+      }
+    }
+  }
+
+}

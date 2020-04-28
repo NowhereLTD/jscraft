@@ -1,4 +1,4 @@
-
+const MobType = require("../../../Enums/MobType.enum.js");
 
 /**
  * PlayerPackageHandler - Handle Player Connection Package
@@ -36,6 +36,90 @@ class PlayerPackageHandler {
       difficulty: world.difficulty,
       maxPlayers: maxPlayers,
       reducedDebugInfo: false
+    });
+  }
+
+
+  /**
+   * kick - Kick the player from server
+   *
+   * @param {String} message The reason message
+   *
+   * @return {type} Description
+   */
+  kick(message) {
+    return this.sendPackage("kick_disconnect", {
+      reason: message
+    });
+  }
+
+
+  /**
+   * openWindow - Open a new inventory window on player
+   *
+   * @param {Window} window the window object
+   *
+   * @return {type} Description
+   */
+  openWindow(window) {
+    if(window.entity.type == MobType.HORSE) {
+      return this.sendPackage("open_window", {
+        windowId: window.id,
+        inventoryType: window.type,
+        windowTitle: window.name,
+        slotCount: window.size,
+        entityId: window.entity.id
+      });
+    }else {
+      return this.sendPackage("open_window", {
+        windowId: window.id,
+        inventoryType: window.type,
+        windowTitle: window.title,
+        slotCount: window.size
+      });
+    }
+  }
+
+
+  /**
+   * closeWindow - Close the window
+   *
+   * @param {Window} window the window object
+   *
+   * @return {type} Description
+   */
+  closeWindow(window) {
+    return this.closeWindowById(window.id);
+  }
+
+
+  /**
+   * closeWindowById - Close the window by window id
+   *
+   * @param {number} id The window number
+   *
+   * @return {type} Description
+   */
+  closeWindowById(id) {
+    return this.sendPackage("close_window", {
+      windowId: id
+    });
+  }
+
+  /**
+   * setWindowSlot - Set the window slot
+   *
+   * @param {Window} window The window to set slot
+   * @param {number} slotId The slot to set
+   * @param {Slot}   item   The slot object set as item
+   *
+   * @return {type} Description
+   */
+  setWindowSlot(window, slotId, item) {
+    return this.sendPackage("set_slot", {
+      windowId: window.id,
+      slot: slotId,
+      item: item
     });
   }
 
@@ -171,7 +255,7 @@ class PlayerPackageHandler {
       dX: entity.packagePosition.x,
       dY: entity.packagePosition.y,
       dZ: entity.packagePosition.z,
-      onGround: entity.onGround
+      onGround: entity.position.onGround
     });
   }
 
@@ -188,7 +272,7 @@ class PlayerPackageHandler {
       entityId: entity.id,
       yaw: entity.packagePosition.yaw,
       pitch: entity.packagePosition.pitch,
-      onGround: entity.onGround
+      onGround: entity.position.Ground
     });
   }
 
@@ -208,7 +292,7 @@ class PlayerPackageHandler {
       dZ: entity.packagePosition.z,
       yaw: entity.packagePosition.yaw,
       pitch: entity.packagePosition.pitch,
-      onGround: entity.onGround
+      onGround: entity.position.Ground
     });
   }
 
