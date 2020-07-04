@@ -18,6 +18,7 @@ class Server {
   constructor(properties) {
     this.properties = properties;
     this.jsonLoader = new JSONLoader();
+    this.nbt = require("nbt");
     this.packageStructure = this.jsonLoader.load("./etc/minecraft-data/structure/structure.json");
   }
 
@@ -34,9 +35,24 @@ class Server {
       "online-mode": this.properties.onlineMode,
       host: this.properties.serverIp,
       port: this.properties.serverPort,
-      version: this.properties.version,
+      version: false,
       motd: this.properties.motd
     });
+
+    /*console.log(this.nbt.parse({
+      "name": "Item",
+      "value": {
+        "EntityTag": {
+          "type": "compound",
+          "value": {
+            "id": {
+              "type": "integer",
+              "value": 1
+            }
+          }
+        }
+      }
+    }));*/
 
     this.eventHandler = new EventHandler(this);
     this.playerManager = new PlayerManager(this);

@@ -11,8 +11,11 @@
   "license": "",
   "dependencies": {
     "better-sqlite3": "^6.0.1",
+    "extends-classes": "^1.0.5",
     "minecraft-protocol": "latest",
     "mysql": "^2.18.1",
+    "nbt": "^0.8.1",
+    "nbt-js": "^0.1.0",
     "pg": "^8.0.3",
     "prismarine-chunk": "^1.14.0",
     "simplex-noise": "^2.4.0",

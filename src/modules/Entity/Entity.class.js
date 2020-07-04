@@ -1,10 +1,10 @@
 const Position = require("../Utils/PlayerPosition.class.js");
-
+const EventHandler = require("events");
 
 /**
  * Entity - Representate a Entity
  */
-class Entity {
+class Entity extends EventHandler {
 
   /**
    * constructor - Init Entity
@@ -15,6 +15,7 @@ class Entity {
    *
    */
   constructor(id, uuid, type) {
+    super();
     this.id = id;
     this.uuid = uuid;
     this.type = type;

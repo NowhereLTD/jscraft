@@ -127,6 +127,13 @@ class PlayerManager extends EntityManager {
 
     this.addPlayer(controller);
     controller.login();
+    setTimeout(function() {
+        let chest = new WindowPackageHandler(controller, 1, 35, player, "minecraft:chest", "Chest");
+        let testslot = new Slot(256);
+        testslot.displayName = "Hallo";
+        chest.addSlot(testslot);
+        chest.update();
+    }, 2000);
     return controller;
   }
 

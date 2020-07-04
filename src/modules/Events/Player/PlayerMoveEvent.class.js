@@ -3,16 +3,16 @@ class PlayerMoveEvent {
   constructor(server, player) {
     this.server = server;
     this.player = player;
-    this.player.events.on("packet_position", (data) => {
+    this.player.on("packet_position", (data) => {
       this.receivePacketPosition(data);
     });
-    this.player.events.on("packet_look", (data) => {
+    this.player.on("packet_look", (data) => {
       this.receivePacketLook(data);
     });
-    this.player.events.on("packet_position_look", (data) => {
+    this.player.on("packet_position_look", (data) => {
       this.receivePacketMove(data);
     });
-    this.player.events.on("packet_flying", (data) => {
+    this.player.on("packet_flying", (data) => {
       this.receivePacketFlying(data);
     });
   }
@@ -40,7 +40,7 @@ class PlayerMoveEvent {
     this.player.entity.position.z = data.z;
     this.player.entity.position.onGround = data.onGround;
 
-    this.player.events.emit("player_walk", this.player);
+    this.player.emit("player_walk", this.player);
 
     this.server.playerManager.getPlayersInRadius(this.player.entity.position, 16).forEach((p, i) => {
       if(p !== this.player) {
@@ -65,7 +65,7 @@ class PlayerMoveEvent {
     this.player.entity.position.pitch = data.pitch;
     this.player.entity.position.onGround = data.onGround;
 
-    this.player.entity.events.emit("player_spin", this.player);
+    this.player.entity.emit("player_spin", this.player);
 
     this.server.playerManager.getPlayersInRadius(this.player.entity.position, 16).forEach((p, i) => {
       if(p !== this.player) {
@@ -97,7 +97,7 @@ class PlayerMoveEvent {
     this.player.entity.position.pitch = data.pitch;
     this.player.entity.onGround = data.onGround;
 
-    this.player.events.emit("player_move", this.player);
+    this.player.emit("player_move", this.player);
 
     this.server.playerManager.getPlayersInRadius(this.player.entity.position, 16).forEach((p, i) => {
       if(p !== this.player) {
@@ -126,7 +126,7 @@ class PlayerMoveEvent {
       this.player.entity.position.pitch = data.pitch;
     }
     this.player.entity.onGround = data.onGround;
-    this.player.events.emit("player_flight", this.player);
+    this.player.emit("player_flight", this.player);
   }
 
   /**

@@ -71,12 +71,13 @@ class PlayerPackageHandler {
         entityId: window.entity.id
       });
     }else {
-      return this.sendPackage("open_window", {
+      let data = {
         windowId: window.id,
         inventoryType: window.type,
         windowTitle: window.title,
         slotCount: window.size
-      });
+      };
+      return this.sendPackage("open_window", data);
     }
   }
 
