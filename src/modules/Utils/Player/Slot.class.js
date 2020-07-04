@@ -1,22 +1,19 @@
-
+const ItemStructure = require("../../Model/NBT/ItemStructure.class.js");
 
 /**
  * Slot - A slot in inventory
  */
 class Slot {
+
   /**
    * constructor - Init slot
    *
-   * @param {number} id          The id of slot
-   * @param {String} displayName The slot display name
-   * @param {number} stackSize   the maximal stack size of slot
-   * @param {String} name        the slot name
-   * @param {type} variations  Description
+   * @param {type}   type      The slot type
+   * @param {number} [count=1] The number of stack
    *
-   * @return {type} Description
+   * @return {type} null
    */
-  constructor(id, type, count) {
-    this.id = id;
+  constructor(type, count = 1) {
     this.type = type;
     this.count = count;
     this.displayName = "";
@@ -26,7 +23,6 @@ class Slot {
     this.meta = null;
     this.variations = [];
   }
-
 
   /**
    * getJSON - get the slot as json data
@@ -54,6 +50,13 @@ class Slot {
       // Set the base data
       data[slotPackageStructure["type"]] = this.type;
       data[slotPackageStructure["count"]] = this.count;
+      data["meta"] = {"metadata": 0, "displayName": "test"};
+      let structure = new ItemStructure();
+      structure.display.display.name = "Hallo";
+      //structure.display.display.lore.push("Line 1");
+      //structure.display.display.lore.push("Line 2");
+      structure.createEnchantment(0, 1);
+      this.nbt = structure.getNBT();
 
       if(slotPackageStructure["meta"] != null && this.meta != null) {
         data[slotPackageStructure["meta"]] = this.meta;

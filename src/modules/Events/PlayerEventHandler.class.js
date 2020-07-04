@@ -16,7 +16,12 @@ class PlayerEventHandler {
       let player = this.server.playerManager.createPlayer(client);
 
       client.on("packet", (data, meta) => {
-        player.events.emit("packet_" + meta.name, data, meta);
+        player.emit("packet_" + meta.name, data, meta);
+        if (meta.name == "block_place") {
+          if(data.heldItem !== null) {
+            console.log(data.heldItem.nbtData.value.Enchantments.value.value);
+          }
+        }
       });
 
       client.on("end", () => {

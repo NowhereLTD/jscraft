@@ -6,15 +6,15 @@ const Position = require("../Utils/PlayerPosition.class.js");
 const EventHandler = require("events");
 
 
-class Controller {
+class Controller extends EventHandler {
 
   constructor(client, server, entity) {
+    super();
     this.client = client;
     this.server = server;
     this.entity = entity;
     this.packageHandler = new PlayerPackageHandler(this);
     this.gameMode = GameMode.CREATIVE;
-    this.events = new EventHandler.EventEmitter();
     this.viewRadius = 8;
     this.loadedChunks = [];
   }

@@ -1,9 +1,10 @@
 const MobType = require("../../Enums/MobType.enum.js");
 const GameMode = require("../../Enums/GameMode.enum.js");
+const WindowType = require("../../Enums/WindowType.enum.js");
 const LivingEntity = require("./LivingEntity.class.js");
 const PlayerPackageHandler = require("../../Packages/PackageHandler/Player/PlayerPackageHandler.class.js");
 const Position = require("../Utils/PlayerPosition.class.js");
-const EventHandler = require("events");
+const WindowManager = require("../Manager/WindowManager.class.js");
 
 /**
  * Player - A Player object
@@ -23,7 +24,8 @@ class Player extends LivingEntity {
     this.client = client;
     this.server = server;
     this.packageHandler = new PlayerPackageHandler(this);
-    this.events = new EventHandler.EventEmitter();
+    this.windowManager = new WindowManager();
+    this.inventory = this.windowManager.createWindow(this, 32, this, WindowType.CONTAINER);
   }
 
 
