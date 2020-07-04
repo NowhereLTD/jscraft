@@ -38,6 +38,13 @@ class ItemStructure {
     this.display.display.lore = [];
     this.display.hideFlags = null;
 
+    // Books
+    this.resolved = null;
+    this.generation = null;
+    this.author = null;
+    this.title = null;
+    this.pages = [];
+
   }
 
   /**
@@ -226,6 +233,48 @@ class ItemStructure {
         value: this.display.hideFlags
       };
     }
+
+
+    // Set Book Data
+    if(this.resolved) {
+      data.resolved = {
+        type: "byte",
+        value: 1
+      }
+    }
+
+    if(this.generation !== null) {
+      data.generation = {
+        type: "int",
+        value: this.generation
+      }
+    }
+
+    if(this.author !== null) {
+      data.author = {
+        type: "string",
+        value: this.author
+      }
+    }
+
+    if(this.title !== null) {
+      data.title = {
+        type: "string",
+        value: this.title
+      }
+    }
+
+    if(this.pages.length > 0) {
+      data.pages = {
+        type: "list",
+        value: {
+          type: "string",
+          value: this.pages
+        }
+      }
+    }
+
+    
 
     return data;
   }
