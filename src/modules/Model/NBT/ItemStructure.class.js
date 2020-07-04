@@ -1,4 +1,6 @@
-
+/**
+  * VERSION SUPPORT: 1.8 -> ?
+  */
 class ItemStructure {
   constructor() {
     // Init General
@@ -23,10 +25,8 @@ class ItemStructure {
     this.attributes = [];
 
     // potion effect
-    this.potionEffect = [];
-    this.potionEffect.customPotionEffects = [];
-    this.potionEffect.potion = null;
-    this.potionEffect.customPotionColor = null;
+    this.potionEffects = [];
+    this.potion = null;
 
     // TODO: Crossbow
 
@@ -47,7 +47,7 @@ class ItemStructure {
    * @param  int level The level of enchantment
    */
   createEnchantment(id, level) {
-    this.enchantments.push({id: { type: 'short', value: id}, lvl: { type: 'short', value: level}});
+    this.enchantments.push({id: {type: 'short', value: id}, lvl: {type: 'short', value: level}});
   }
 
 
@@ -58,7 +58,7 @@ class ItemStructure {
    * @param  int level the level of enchantment
    */
   createStoredEnchantment(id, level) {
-    this.storedEnchantments.push({id: { type: 'short', value: id}, lvl: { type: 'short', value: level}});
+    this.storedEnchantments.push({id: {type: 'string', value: id}, lvl: {type: 'short', value: level}});
   }
 
 
@@ -69,26 +69,26 @@ class ItemStructure {
    * @param  string name          the name of modifier (has no effect)
    * @param  string slot          the slot to take a effect ("mainhand", "offhand", "feet", "legs", "chest", "head")
    * @param  int operation        modifier operation (add [id=0], multiply_base [id=1], multiply [id=2])
-   * @param  float amount         the amount of change
-   * @param  array uuid           int array with the uuid of modifier (four numbers exxample: [0, 0, 0, 0])
+   * @param  double amount        the amount of change
+   * @param  long uuidMost        uppermost bits of the modifier's UUID
+   * @param  long uuidLeast       lowermost bits of the modifier's UUID
    */
-  createAttribute(attributeName, name, slot, operation, amount, uuid) {
-    this.attributes.push({AttributeName: attributeName, Name: name, Slot: slot, Operation: operation, Amount: amount, UUID: uuid});
+  createAttribute(attributeName, name, slot, operation, amount, uuidMost, uuidLeast) {
+    this.attributes.push({AttributeName: {type: 'string', value: attributeName}, Name: {type: 'string', value: name}, Slot: {type: 'string', value: slot}, Operation: {type: 'int', value: operation}, Amount: {type: 'double', value: amount}, UUIDMost: {type: 'long', value: uuidMost}, UUIDLeast: {type: 'long', value: uuidLeast}});
   }
 
 
   /**
    * createPotionEffect - Create a new Potion effect
    *
-   * @param  int id                id of effect
-   * @param  int amplifier         amplifier of the effect
+   * @param  byte id               id of effect
+   * @param  byte amplifier        amplifier of the effect
    * @param  int duration          duration of effect in ticks
    * @param  boolean ambient       if this effect a bacon effect
    * @param  boolean showParticles produces particles
-   * @param  boolean showIcon      show the effect icon
    */
-  createPotionEffect(id, amplifier, duration, ambient, showParticles, showIcon) {
-    this.potionEffect.push({Id: id, Amplifier: amplifier, Duration: duration, Ambient: ambient, ShowParticles: showParticles, ShowIcon: showIcon});
+  createPotionEffect(id, amplifier, duration, ambient, showParticles) {
+    this.potionEffects.push({Id: {type: 'byte', value: id}, Amplifier: {type: 'byte', value: amplifier}, Duration: {type: 'int', value: duration}, Ambient: {type: 'byte', value: boolToNum(ambient)}, ShowParticles: {type: 'byte', value: boolToNum(showParticles)}});
   }
 
 
@@ -105,12 +105,15 @@ class ItemStructure {
     };
 
     // Set general data
+    /*
+    > 1.8
     if(this.general.damage !== null) {
       data.value.Damage = {
-        type: "int",
+        type: "short",
         value: this.general.damage
       }
     }
+    */
 
     if(this.general.unbreakable !== null) {
       data.value.Unbreakable = {
@@ -129,12 +132,15 @@ class ItemStructure {
       }
     }
 
+    /*
+    > 1.8
     if(this.general.customModelData !== null) {
       data.value.CustomModelData = {
         type: "int",
         value: this.general.customModelData
       }
     }
+    */
 
     if(this.block.canPlaceOn !== null) {
       data.value.CanPlaceOn = {
@@ -150,10 +156,10 @@ class ItemStructure {
 
     // Enchantments
     if(this.enchantments.length > 0) {
-      data.value.Enchantments = {
+      data.value.ench = {
         type: "list",
         value: {
-          type: 'compound',
+          type: "compound",
           value: this.enchantments
         }
       }
@@ -163,7 +169,7 @@ class ItemStructure {
       data.value.StoredEnchantments = {
         type: "list",
         value: {
-          type: 'compound',
+          type: "compound",
           value: this.storedEnchantments
         }
       }
@@ -173,6 +179,37 @@ class ItemStructure {
       data.value.repairCost = {
         type: "int",
         value: this.repairCost
+      }
+    }
+
+
+    // Attribute Modifiers
+    if(this.attributes.length > 0) {
+      data.value.AttributeModifiers = {
+        type: "list",
+        value: {
+          type: "compound",
+          value: this.attributes
+        }
+      }
+    }
+
+
+    // Potion Effect
+    if(this.potionEffects.length > 0) {
+      data.value.CustomPotionEffects = {
+        type: "list",
+        value: {
+          type: "compound",
+          value: this.potionEffects
+        }
+      }
+    }
+
+    if(this.potion !== null) {
+      data.value.Potion = {
+        type: "string",
+        value: this.potion
       }
     }
 
