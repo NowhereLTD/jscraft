@@ -1,3 +1,5 @@
+const {ServerError, NBTNumberNotInRangeError} = require("../../Utils/ServerError.class.js");
+
 /**
   * VERSION SUPPORT: 1.8 -> ?
   */
@@ -45,6 +47,26 @@ class ItemStructure {
     this.title = null;
     this.pages = [];
 
+    // Player Head
+    this.skullOwner = [];
+    this.skullOwner.id = null;
+    this.skullOwner.name = null;
+    this.skullOwner.properties = [];
+    this.skullOwner.properties.texture = null;
+
+    // Fireworks
+    this.fireworks = [];
+    this.fireworks.flight = null;
+    this.fireworks.explosions = null;
+
+    // Firework Star
+    this.explosion = [];
+    this.explosion.flicker = null;
+    this.explosion.trail = null;
+    this.explosion.type = null;
+    this.explosion.colors = [];
+    this.explosion.fadeColors = [];
+
   }
 
   /**
@@ -84,6 +106,61 @@ class ItemStructure {
     this.attributes.push({AttributeName: {type: 'string', value: attributeName}, Name: {type: 'string', value: name}, Slot: {type: 'string', value: slot}, Operation: {type: 'int', value: operation}, Amount: {type: 'double', value: amount}, UUIDMost: {type: 'long', value: uuidMost}, UUIDLeast: {type: 'long', value: uuidLeast}});
   }
 
+
+  createTexture(url, options = {}) {
+    let cacheTextureData = {};
+    if(options.timestamp !== undefined){
+      cacheTextureData.timestamp = {
+        type: "long",
+        value: options.timestamp
+      }
+    }
+
+    if(options.profileId !== undefined){
+      cacheTextureData.profileId = {
+        type: "string",
+        value: options.profileId
+      }
+    }
+
+    if(options.profileName !== undefined){
+      cacheTextureData.profileName = {
+        type: "string",
+        value: options.profileName
+      }
+    }
+
+    if(options.isPublic !== undefined){
+      cacheTextureData.isPublic = {
+        type: "string",
+        value: options.isPublic
+      }
+    }
+
+    cacheTextureData.textures = {
+      type: "compound",
+      value: {
+        SKIN: {
+          type: "compound",
+          value: {
+            url: {
+              type: "string",
+              value: url
+            }
+          }
+        }
+      }
+    }
+
+    let cacheTexture = {type: "compound", value: {}};
+    cacheTexture.value.Value = {type: "string", value: Buffer.from(JSON.stringify(cacheTextureData)).toString("base64")};
+
+    if(options.signature !== undefined) {
+      cacheTexture.value.Signature = {type: "String", value: options.signature};
+    }
+
+    //this.skullOwner.properties.texture = cacheTexture;
+  }
 
   /**
    * createPotionEffect - Create a new Potion effect
@@ -237,35 +314,35 @@ class ItemStructure {
 
     // Set Book Data
     if(this.resolved) {
-      data.resolved = {
+      data.value.resolved = {
         type: "byte",
         value: 1
       }
     }
 
     if(this.generation !== null) {
-      data.generation = {
+      data.value.generation = {
         type: "int",
         value: this.generation
       }
     }
 
     if(this.author !== null) {
-      data.author = {
+      data.value.author = {
         type: "string",
         value: this.author
       }
     }
 
     if(this.title !== null) {
-      data.title = {
+      data.value.title = {
         type: "string",
         value: this.title
       }
     }
 
     if(this.pages.length > 0) {
-      data.pages = {
+      data.value.pages = {
         type: "list",
         value: {
           type: "string",
@@ -274,7 +351,67 @@ class ItemStructure {
       }
     }
 
-    
+    // Player Heads
+    /*if(this.skullOwner.id !== null && this.skullOwner.name !== null && this.skullOwner.properties.texture !== null) {
+      data.value.SkullOwner = {
+        type: "compound",
+        value: {
+          Id: {type: "string", value: this.skullOwner.id},
+          Name: {type: "string", value: this.skullOwner.name},
+          Properties: {
+            type: "compound",
+            value: {
+              textures: {
+                type: "list",
+                value: this.skullOwner.properties.texture
+              }
+            }
+          }
+        }
+      }
+    }*/
+
+    if(this.skullOwner.name !== null) {
+      data.value.SkullOwner = {
+        type: "compound",
+        value: {
+          Name: {type: "string", value: this.skullOwner.name}
+        }
+      }
+
+      if(this.skullOwner.id !== null) {
+        data.value.SkullOwner.value.Id = {type: "string", value: this.skullOwner.id};
+      }
+
+      if(this.skullOwner.properties.texture !== null) {
+        data.value.SkullOwner.value.Properties = {
+          type: "compound",
+          value: {
+            textures: {
+              type: "list",
+              value: this.skullOwner.properties.texture
+            }
+          }
+        };
+      }
+    }
+
+
+    if(this.fireworks.flight !== null) {
+      if(this.fireworks.flight < -128 || this.fireworks.flight > 127) {
+        throw new NBTNumberNotInRangeError(this.fireworks.flight, "-128", "127");
+        return;
+      }
+
+      data.value.Fireworks.type = "compound";
+      data.value.Fireworks.value.Flight = {};
+      data.value.Fireworks.value.Flight.type = "byte";
+      data.value.Fireworks.value.Flight.value = this.fireworks.flight;
+    }
+
+    if(this.fireworks.explosion !== null && this.fireworks.explosion.length > 0) {
+      // TODO
+    }
 
     return data;
   }
